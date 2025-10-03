@@ -34,7 +34,7 @@ public class ArrayList<T> implements List<T> {
     @Override
     public void addAll(List<T> list) {
         int necessaryCapacity = list.size() + size;
-        while (elementData.length <= necessaryCapacity) {
+        while (elementData.length < necessaryCapacity) {
             grow();
         }
         for (int i = 0; i < list.size(); i++) {
@@ -80,7 +80,7 @@ public class ArrayList<T> implements List<T> {
                 return oldValue;
             }
         }
-        throw new NoSuchElementException();
+        throw new NoSuchElementException("Element not found: " + element);
     }
 
     @Override
@@ -95,9 +95,7 @@ public class ArrayList<T> implements List<T> {
 
     private void grow() {
         Object[] newArray = new Object[elementData.length + (elementData.length >> 1)];
-        for (int i = 0; i < elementData.length; i++) {
-            newArray[i] = elementData[i];
-        }
+        System.arraycopy(elementData, 0, newArray, 0, size);
         elementData = newArray;
     }
 
